@@ -40,7 +40,7 @@ function App() {
        return <li key={index}>{data.name}</li>
      })}
    </ul>
-   <p>{data2.pokemon[Math.floor(Math.random() * data2.pokemon.lenght) + 0].pokemon.name}</p> 
+   
      
 
     </> 
