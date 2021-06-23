@@ -1,25 +1,52 @@
-import logo from './logo.svg';
+import { useState, useEffect} from 'react';
+
 import './App.css';
 
 function App() {
+  
+  const [loading, setLoading] =useState(false)
+  const [url, setUrl]=useState("https://pokeapi.co/api/v2/type/")
+  const [data, setData]=useState([])
+  const [tipos, setTipos]=useState('')
+  const [data2, setData2]=useState([])
+  
+
+  useEffect(()=>{
+    setLoading(true)
+    fetch(url).then(res => res.json()).then((datos)=>setData(datos.results))
+    setLoading(false)
+  },[url])
+
+  useEffect(()=>{
+    setLoading(true)
+    fetch(`https://pokeapi.co/api/v2/type/${tipos}`).then(res => res.json()).then((dato)=>setData2(dato.pokemon))
+    setLoading(false)
+  },[tipos])
+
+  if(loading){
+    return <h2>Cargando....</h2>
+  }else{
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+     <h1>Tipos Pokemon</h1>
+     <select onChange={ (e) => setTipos(e.target.value)}>
+      {data.map((pokemon) =>
+      <option key={pokemon.name}>{pokemon.name}</option>)}     
+      </select>
+      <h1>{tipos}</h1>
+     <ul>
+     {data.map((data, index)=>{
+       return <li key={index}>{data.name}</li>
+     })}
+   </ul>
+   <p>{data2.pokemon[Math.floor(Math.random() * data2.pokemon.lenght) + 0].pokemon.name}</p> 
+     
+
+    </> 
   );
+    }
 }
 
 export default App;
+
