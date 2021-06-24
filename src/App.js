@@ -23,6 +23,8 @@ function App() {
     setLoading(false)
   },[tipos])
 
+ 
+
   if(loading){
     return <h2>Cargando....</h2>
   }else{
@@ -40,7 +42,7 @@ function App() {
        return <li key={index}>{data.name}</li>
      })}
    </ul>
-   
+     
      
 
     </> 
