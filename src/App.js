@@ -1,6 +1,10 @@
 import { useState, useEffect} from 'react';
-
 import './App.css';
+
+function Lista(props){
+  let listapokemones = props.pokemons.map((poke)=>{return(<li>{poke}</li>)})
+  return <li>{listapokemones}</li>
+}
 
 function App() {
   
@@ -19,8 +23,21 @@ function App() {
 
   useEffect(()=>{
     setLoading(true)
-    fetch(`https://pokeapi.co/api/v2/type/${tipos}`).then(res => res.json()).then((dato)=>setData2(dato.pokemon))
-    setLoading(false)
+    fetch(`https://pokeapi.co/api/v2/type/${tipos}`).then(res => res.json()).then((dato)=>{
+      let arrayPokemon=[]
+    if(dato.pokemon >=1){      
+      for (let index = 0; index < dato.pokemon.length; index++) {
+        let rnd= Math.floor(Math.random()*dato.pokemon.lenght)
+        arrayPokemon.push(dato.pokemon[rnd].name)
+      }
+        
+      }else{
+        arrayPokemon.push([' No hay pokemons de este tipo'])
+      }
+      setData2(arrayPokemon)
+
+    })
+     setLoading(false)
   },[tipos])
 
  
@@ -42,6 +59,8 @@ function App() {
        return <li key={index}>{data.name}</li>
      })}
    </ul>
+     < Lista pokemons={data2}/>
+
      
      
 
